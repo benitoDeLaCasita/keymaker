@@ -20,6 +20,7 @@ require 'keymaker/service'
 require 'keymaker/request'
 
 require 'keymaker/requests/batch_request'
+require 'keymaker/requests/batch_cypher_request'
 require 'keymaker/requests/batch_get_nodes_request'
 require 'keymaker/requests/create_node_request'
 require 'keymaker/requests/delete_node_request'

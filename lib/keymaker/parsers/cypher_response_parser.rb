@@ -11,6 +11,12 @@ module Keymaker
       end
     end
 
+    def self.parse_array(response_array)
+      response_array.map{|response|
+        parse(response.body)
+      }
+    end
+
     def self.translate_response(response_body, result)
       Hashie::Mash.new(Hash[sanitized_column_names(response_body).zip(result)])
     end
