@@ -4,16 +4,17 @@ module Keymaker
   class Configuration
 
     attr_accessor :protocol, :server, :port, :data_directory,
-      :authentication, :username, :password
+      :authentication, :username, :password, :http_client_custom_initializer
 
     def initialize(attrs={})
-      self.protocol       = attrs.fetch(:protocol) {'http'}
-      self.server         = attrs.fetch(:server) {'localhost'}
-      self.port           = attrs.fetch(:port) {7474}
-      self.authentication = attrs.fetch(:authentication) {{}}
-      self.username       = attrs.fetch(:username) {nil}
-      self.password       = attrs.fetch(:password) {nil}
-      self.data_directory = 'db/data'
+      self.protocol                         = attrs.fetch(:protocol) {'http'}
+      self.server                           = attrs.fetch(:server) {'localhost'}
+      self.port                             = attrs.fetch(:port) {7474}
+      self.authentication                   = attrs.fetch(:authentication) {{}}
+      self.username                         = attrs.fetch(:username) {nil}
+      self.password                         = attrs.fetch(:password) {nil}
+      self.http_client_custom_initializer   = attrs.fetch(:http_client_custom_initializer) {->(http_client){}}
+      self.data_directory                   = 'db/data'
     end
 
     def service_root
