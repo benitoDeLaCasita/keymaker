@@ -22,6 +22,7 @@ module Keymaker
         conn.response :mashify
         conn.response :json, :content_type => /\bjson$/
         conn.adapter :net_http
+        config.http_client_custom_initializer.call( conn )
       end
     end
 
