@@ -17,7 +17,7 @@ module Keymaker
     end
 
     def connection
-      @connection ||= Faraday.new(url: config.connection_service_root_url) do |conn|
+      @connection ||= Faraday.new(:url => config.connection_service_root_url) do |conn|
         conn.request :json
         conn.response :mashify
         conn.response :json, :content_type => /\bjson$/
@@ -43,37 +43,37 @@ module Keymaker
     end
 
     def get_node(node_id)
-      response = get_node_request({node_id: node_id})
+      response = get_node_request({:node_id => node_id})
       data = response.body.data
       data.merge!("neo4j_id" => response.neo4j_id, "__raw_response__" => response)
     end
 
     def update_node_properties(node_id, attrs)
-      update_node_properties_request({node_id: node_id}.merge(attrs))
+      update_node_properties_request({:node_id => node_id}.merge(attrs))
     end
 
     def delete_node(node_id)
-      delete_node_request(node_id: node_id)
+      delete_node_request(:node_id => node_id)
     end
 
     def create_relationship(rel_type, start_node_id, end_node_id, data={})
-      create_relationship_request({node_id: start_node_id, rel_type: rel_type, end_node_id: end_node_id, data: data})
+      create_relationship_request({:node_id => start_node_id, :rel_type => rel_type, :end_node_id => end_node_id, :data => data})
     end
 
     def delete_relationship(relationship_id)
-      delete_relationship_request(relationship_id: relationship_id)
+      delete_relationship_request(:relationship_id => relationship_id)
     end
 
     def add_node_to_index(index_name, key, value, node_id)
-      add_node_to_index_request(index_name: index_name, key: key, value: value, node_id: node_id)
+      add_node_to_index_request(:index_name => index_name, :key => key, :value => value, :node_id => node_id)
     end
 
     def remove_node_from_index(index_name, key, value, node_id)
-      remove_node_from_index_request(index_name: index_name, key: key, value: value, node_id: node_id)
+      remove_node_from_index_request(:index_name => index_name, :key => key, :value => value, :node_id => node_id)
     end
 
     def path_traverse(start_node_id, data={})
-      traverse_path_request({node_id: start_node_id}.merge(data))
+      traverse_path_request({:node_id => start_node_id}.merge(data))
     end
 
     def batch_get_nodes(node_ids)
@@ -81,7 +81,7 @@ module Keymaker
     end
 
     def execute_cypher(query, params)
-      response = execute_cypher_request({query: query, params: params})
+      response = execute_cypher_request({:query => query, :params => params})
       Keymaker::CypherResponseParser.parse(response.body)
     end
 
@@ -90,7 +90,7 @@ module Keymaker
       Keymaker::CypherResponseParser.parse_array(response.body)
     end
     def execute_script(script, params={})
-      execute_gremlin_request({script: script, params: params})
+      execute_gremlin_request({:script => script, :params => params})
     end
 
     def get(url, body)

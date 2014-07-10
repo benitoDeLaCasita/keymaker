@@ -5,9 +5,9 @@ module Keymaker::Serialization
     base.define_model_callbacks :save, :create
   end
 
-  COERCION_PROCS = Hash.new(->(v){v}).tap do |procs|
-    procs[Integer] = ->(v){ v.to_i }
-    procs[DateTime] = ->(v) do
+  COERCION_PROCS = Hash.new(lambda{|v|}).tap do |procs|
+    procs[Integer] = lambda{ |v| v.to_i }
+    procs[DateTime] = lambda do |v|
       case v
       when Time
         Time.at(v)

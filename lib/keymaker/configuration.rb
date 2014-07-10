@@ -13,7 +13,7 @@ module Keymaker
       self.authentication                   = attrs.fetch(:authentication) {{}}
       self.username                         = attrs.fetch(:username) {nil}
       self.password                         = attrs.fetch(:password) {nil}
-      self.http_client_custom_initializer   = attrs.fetch(:http_client_custom_initializer) {->(http_client){}}
+      self.http_client_custom_initializer   = attrs.fetch(:http_client_custom_initializer) {lambda{|http_client|}}
       self.data_directory                   = 'db/data'
     end
 

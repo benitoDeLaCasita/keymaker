@@ -100,7 +100,7 @@ module Keymaker
       end
 
       def sanitize(attrs)
-        serializable_hash(except: :node_id).merge(attrs.except('node_id')).reject {|k,v| v.blank?}
+        serializable_hash(:except => :node_id).merge(attrs.except('node_id')).reject {|k,v| v.blank?}
       end
 
       def save
@@ -124,7 +124,7 @@ module Keymaker
       end
 
       def update(attrs)
-        process_attrs(sanitize(attrs.merge(updated_at: Time.now.utc.to_i)))
+        process_attrs(sanitize(attrs.merge(:updated_at => Time.now.utc.to_i)))
         neo_service.update_node_properties(node_id, sanitize(attributes))
       end
 
