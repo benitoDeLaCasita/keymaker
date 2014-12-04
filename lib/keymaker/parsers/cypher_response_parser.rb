@@ -13,6 +13,12 @@ module Keymaker
 
     def self.parse_batch_response(response_array)
       response_array.map{|response|
+        case response.status
+        when (400..499)
+          raise ClientError.new(response, response.body)
+        when (500..599)
+          raise ServerError.new(response, response.body)
+        end
         parse(response.body)
       }
     end
