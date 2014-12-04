@@ -87,7 +87,7 @@ module Keymaker
 
     def execute_cypher_batch(queries)
       response = batch_cypher_request(queries)
-      Keymaker::CypherResponseParser.parse_array(response.body)
+      Keymaker::CypherResponseParser.parse_batch_response(response.body)
     end
     def execute_script(script, params={})
       execute_gremlin_request({script: script, params: params})

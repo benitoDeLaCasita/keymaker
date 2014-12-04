@@ -11,7 +11,7 @@ module Keymaker
       end
     end
 
-    def self.parse_array(response_array)
+    def self.parse_batch_response(response_array)
       response_array.map{|response|
         parse(response.body)
       }
